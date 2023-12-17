@@ -1,0 +1,73 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "cmake: build",
+      "type": "shell",
+      "options": {
+        "cwd": "${workspaceFolder}/test/build"
+      },
+      "windows": {
+        "command": "${config:cmakeWinPath}"
+      },
+      "linux": {
+        "command": "cmake"
+      },
+      "args": [
+        "-D",
+        "CMAKE_BUILD_TYPE=${input:configurationType}",
+        ".."
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "c++: build (x64)",
+      "type": "shell",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}/test/build"
+      },
+      "windows": {
+        "command": "${config:builderWinPath}",
+        "args": [
+          "${config:projectName}.vcxproj",
+          "/p:configuration=${input:configurationType}",
+          "/p:platform=x64",
+          "/t:rebuild"
+        ],
+        "problemMatcher": [
+          "$msCompile"
+        ]
+      },
+      "linux": {
+        "command": "make",
+        "problemMatcher": [
+          "$gcc"
+        ]
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "type": "pickString",
+      "id": "configurationType",
+      "description": "What type of configuration do you want to build?",
+      "options": [
+        "Debug",
+        "Release",
+      ],
+      "default": "Debug"
+    },
+  ]
+}

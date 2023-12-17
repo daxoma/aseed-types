@@ -1,0 +1,6 @@
+[submodule "test/doctest"]
+	path = test/thirdparty/doctest
+	url = https://github.com/doctest/doctest.git
+[submodule "test/cmake"]
+	path = test/cmake
+	url = https://github.com/daxoma/aseed-cmake.git
